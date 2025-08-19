@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Derecho - Mimi Art</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .question {
+            font-size: 1.2rem;
+            color: #34495e;
+            margin-bottom: 25px;
+        }
+        .options-container {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .option {
+            display: block;
+            margin-bottom: 15px;
+        }
+        .option input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .option label {
+            font-size: 1rem;
+            color: #555;
+            cursor: pointer;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        .input-group input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Para que el padding no afecte el ancho */
+        }
+        .btn-submit {
+            background-color: #25d366; /* WhatsApp green */
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #128c7e;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Encuesta de Derecho</h1>
+        
+        <div class="input-group">
+            <label for="respondentName">Tu nombre:</label>
+            <input type="text" id="respondentName" placeholder="Escribe tu nombre aquí" required>
+        </div>
+
+        <p class="question">Selecciona tu(s) ramo(s) favorito(s) (máximo 2):</p>
+        
+        <div class="options-container" id="surveyOptions">
+            <div class="option">
+                <input type="checkbox" id="procesalI" name="ramo" value="Procesal I">
+                <label for="procesalI">Procesal I</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="romanoII" name="ramo" value="Romano II">
+                <label for="romanoII">Romano II</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="investigacionJuridica" name="ramo" value="Investigación Jurídica">
+                <label for="investigacionJuridica">Investigación Jurídica</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="constitucionalI" name="ramo" value="Constitucional I">
+                <label for="constitucionalI">Constitucional I</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="historiaDelDerecho" name="ramo" value="Historia del Derecho">
+                <label for="historiaDelDerecho">Historia del Derecho</label>
+            </div>
+        </div>
+
+        <button class="btn-submit" onclick="enviarEncuesta()">
+            Enviar al WhatsApp
+        </button>
+    </div>
+
+    <script>
+        function enviarEncuesta() {
+            const nombre = document.getElementById('respondentName').value.trim();
+            const checkboxes = document.querySelectorAll('input[name="ramo"]:checked');
+            const ramosSeleccionados = [];
+            
+            checkboxes.forEach(checkbox => {
+                ramosSeleccionados.push(checkbox.value);
+            });
+
+            if (nombre === "") {
+                alert("Por favor, escribe tu nombre.");
+                return;
+            }
+
+            if (ramosSeleccionados.length === 0) {
+                alert("Por favor, selecciona al menos un ramo.");
+                return;
+            }
+
+            if (ramosSeleccionados.length > 2) {
+                alert("Por favor, selecciona un máximo de 2 opciones.");
+                return;
+            }
+
+            const mensaje = `¡Hola! Mi nombre es ${nombre}. Mis ramos favoritos son: ${ramosSeleccionados.join(' y ')}.`;
+            const numeroWhatsApp = "56940332017";
+            const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+
+</body>
+</html>
